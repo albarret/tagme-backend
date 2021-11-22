@@ -1,4 +1,6 @@
 var Asset = require("../model/asset.model");
+var Unit = require("../model/unit.model");
+const mongoose = require("mongoose");
 
 exports.create = (req, res) => {
   if (!req.body) {
@@ -23,6 +25,7 @@ exports.create = (req, res) => {
     .save(asset)
     .then((data) => {
       res.send(data);
+      console.log(data);
     })
     .catch((err) => {
       res.status(500).send({
@@ -32,9 +35,11 @@ exports.create = (req, res) => {
 };
 
 exports.find = (req, res) => {
-  Asset.find()
-    .then((user) => {
-      res.send(user);
+  Asset.find({})
+    .populate("unit")
+    .exec()
+    .then((asset) => {
+      res.status(200).json(asset);
     })
     .catch((err) => {
       res.status(500).send({
