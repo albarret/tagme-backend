@@ -19,7 +19,8 @@ app.use(morgan("tiny"));
 connectDB();
 
 // parse requests
-app.use(bodyparser.urlencoded({ extended: true }));
+// app.use(bodyparser.urlencoded({ extended: true }));
+app.use(bodyparser.json());
 
 app.use("/", require("./server/routes/router"));
 
